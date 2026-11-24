@@ -74,7 +74,7 @@ const Navbar = () => {
 
         <div className="flex min-w-0 flex-1 justify-center">
           <Link
-            href="/events"
+            href="/upcomingEvents"
             className="group hidden items-center gap-2 rounded-full border border-border/80 bg-secondary/70 px-4 py-1.5 text-sm font-medium text-secondary-foreground transition-colors hover:bg-secondary md:flex"
           >
             <span className="relative flex size-2">

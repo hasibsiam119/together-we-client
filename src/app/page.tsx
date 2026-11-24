@@ -2,7 +2,6 @@
 
 import Features from "@/components/homepage/feature";
 import Hero from "@/components/homepage/hero";
-import Navbar from "@/components/homepage/navbar";
 import Newsletter from "@/components/homepage/newsletter";
 
 

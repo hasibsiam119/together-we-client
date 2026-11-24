@@ -3,6 +3,8 @@ import { Geist, Geist_Mono, Raleway, Roboto } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/homepage/navbar";
+import Footer from "@/components/homepage/footer";
+import { ToastContainer } from "react-toastify";
 
 const robotoHeading = Roboto({subsets:['latin'],variable:'--font-heading'});
 
@@ -33,6 +35,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Navbar />
         
         {children}
+        <Footer />
+
+        <ToastContainer />
         </body>
     </html>
   );

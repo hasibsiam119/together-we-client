@@ -46,7 +46,7 @@ const EventCard = ({ event }: { event: TogetherWeEvent }) => {
   const categoryStyle =
     categoryStyles[event.type] ?? categoryStyles.Other;
   const hasImage = Boolean(event.thumbnail) && !imageFailed;
-  const eventHref = `/events/${event._id}`;
+  const eventHref = `/upcomingEvents/${event._id}`;
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-[20px] border border-border/80 bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/20 hover:shadow-xl hover:shadow-primary/[0.07] focus-within:border-primary/25 focus-within:shadow-lg">

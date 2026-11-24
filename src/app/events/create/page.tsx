@@ -183,7 +183,7 @@ const CreateEventPage = () => {
         throw new Error(data?.message || "Failed to add destination");
       }
 
-      router.push("/events");
+      router.push("/upcomingEvents");
       router.refresh();
         
     }

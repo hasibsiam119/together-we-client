@@ -8,6 +8,19 @@ export type TogetherWeEvent = {
   description?: string;
 };
 
+export type EventDetails = {
+  id: string;
+  title: string;
+  type: string;
+  date: string;
+  location: string;
+  thumbnail: string;
+  description: string;
+  organizerName: string;
+  organizerEmail: string;
+  organizerImage: string;
+};
+
 export const EVENT_CATEGORIES = [
   "All Events",
   "Donation",
@@ -134,6 +147,22 @@ export function formatEventDate(dateOnly: string) {
   }
 
   return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(new Date(year, month - 1, day));
+}
+
+export function formatEventDateMedium(value: string) {
+  const dateOnly = toDateOnly(value);
+  const [year, month, day] = dateOnly.split("-").map(Number);
+
+  if (!year || !month || !day) {
+    return value;
+  }
+
+  return new Intl.DateTimeFormat("en-US", {
+    weekday: "short",
     month: "short",
     day: "numeric",
     year: "numeric",

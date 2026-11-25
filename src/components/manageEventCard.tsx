@@ -3,7 +3,7 @@ import {
     CalendarDays,
     ImageOff,
     MapPin,
-    Pencil,
+    
     Sparkles,
     Trash2,
 } from "lucide-react";
@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { formatEventDate, toDateOnly } from "@/lib/events";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import UpdateEventPage from "./editEvent";
 
 export type ManageEvent = {
     _id?: string;
@@ -42,7 +43,7 @@ const ManageEventCard = ({
 
     const handleCancel = async () => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${event._id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${event._id ?? event.id}`, {
                 method: "DELETE",
             });
 
@@ -50,8 +51,8 @@ const ManageEventCard = ({
                 throw new Error(`Deletation failed: ${res.status}`);
             }
 
-            toast.error("Event Deleted successfully");
-            route.refresh()
+            toast.success("Event Deleted successfully");
+             route.refresh()
 
         } catch (error) {
             console.error(error);
@@ -151,15 +152,7 @@ const ManageEventCard = ({
 
             {/* Actions */}
             <div className="flex items-center gap-2 border-t border-border/70 p-4 md:w-44 md:flex-col md:items-stretch md:justify-center md:border-t-0 md:border-l md:p-5">
-                <Button
-                    type="button"
-
-                    aria-label={`Edit event: ${event.title}`}
-                    className="h-10 flex-1 rounded-lg bg-primary px-4 text-sm font-bold text-primary-foreground shadow-sm shadow-primary/20 transition-all duration-200 hover:bg-[#14532d] md:flex-none"
-                >
-                    <Pencil className="size-4" aria-hidden />
-                    Edit
-                </Button>
+              <UpdateEventPage event={event}></UpdateEventPage>
 
                 <Button
                     type="button"

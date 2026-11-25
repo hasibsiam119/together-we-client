@@ -132,6 +132,7 @@ const SignInPage = () => {
     }
 
     if (data) {
+      toast.success("Signed in successfully.");
       router.push("/");
       router.refresh();
     }

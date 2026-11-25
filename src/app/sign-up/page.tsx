@@ -31,6 +31,17 @@ const highlights = [
   { label: "Create Positive Impact", icon: Sparkles },
 ];
 
+function getPasswordError(password: string) {
+  const problems: string[] = [];
+
+  if (password.length < 6) problems.push("at least 6 characters");
+  if (!/[A-Z]/.test(password)) problems.push("an uppercase letter");
+  if (!/[a-z]/.test(password)) problems.push("a lowercase letter");
+
+  if (problems.length === 0) return null;
+  return `Password must contain ${problems.join(", ")}.`;
+}
+
 type FormFieldProps = {
   
   id: string;
@@ -128,6 +139,13 @@ const SignupPage = () => {
     const image = String(formData.get("image") ?? "").trim();
     const password = String(formData.get("password") ?? "");
 
+    const passwordError = getPasswordError(password);
+
+    if (passwordError) {
+      toast.error(passwordError);
+      return;
+    }
+
     const { data, error } = await authClient.signUp.email({
       name,
       email,
@@ -142,6 +160,7 @@ const SignupPage = () => {
     }
 
     if (data) {
+      toast.success("Account created successfully.");
       router.push("/");
       router.refresh();
     }

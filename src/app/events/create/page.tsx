@@ -167,7 +167,11 @@ const CreateEventPage = () => {
         event.preventDefault();
 
         const formData = new FormData(event.currentTarget);
-        const payload = Object.fromEntries(formData.entries());
+        const eventData = Object.fromEntries(formData.entries());
+        const payload = {
+          ...eventData,
+          email:user?.email
+        }
 
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/add-event`,{
         method: "POST",

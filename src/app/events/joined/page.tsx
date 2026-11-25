@@ -126,7 +126,7 @@ const JoinedEventPage = () => {
                 throw new Error(`Cancellation failed: ${res.status}`);
             }
 
-            toast.success("Booking cancelled successfully");
+            toast.error("cancelled successfully");
             setJoinedEvents((prev) => prev.filter((e) => e._id !== joinedId));
         } catch (error) {
             console.error(error);

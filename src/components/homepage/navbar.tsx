@@ -28,7 +28,7 @@ import { authClient } from "@/lib/auth-client";
 
 const accountLinks: { label: string; href: string; icon: LucideIcon }[] = [
   { label: "Create Event", href: "/events/create", icon: CirclePlus },
-  { label: "Manage Events", href: "/dashboard/events", icon: Settings },
+  { label: "Manage Events", href: "/events/manage", icon: Settings },
   { label: "Joined Events", href: "/events/joined", icon: CircleCheck },
 ];
 

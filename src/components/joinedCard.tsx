@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   CalendarDays,
+  CheckCircle2,
   Heart,
   HeartHandshake,
   MapPin,
@@ -18,10 +19,37 @@ import { formatEventDateMedium, type EventDetails } from "@/lib/events";
 import { useRouter } from "next/navigation";
 import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
+function hasJoinedEvent(records: unknown, eventId: string) {
+  if (!eventId || !Array.isArray(records)) {
+    return false;
+  }
+
+  return records.some((record) => {
+    if (!record || typeof record !== "object") {
+      return false;
+    }
+
+    const item = record as Record<string, unknown>;
+    const joinedEventId =
+      typeof item.id === "string"
+        ? item.id
+        : typeof item.eventId === "string"
+          ? item.eventId
+          : "";
+
+    return joinedEventId === eventId;
+  });
+}
+
 export default function JoinCard({ event }: { event: EventDetails }) {
-  const { data: session } = authClient.useSession();
+  const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
   const [isJoining, setIsJoining] = useState(false);
+  const [joinedByEvent, setJoinedByEvent] = useState<Record<string, boolean>>(
+    {},
+  );
+  const joinKey =
+    user?.email && event.id ? `${user.email}:${event.id}` : "";
 
   const rows: { icon: LucideIcon; label: string; value: string }[] = [];
 
@@ -41,7 +69,63 @@ export default function JoinCard({ event }: { event: EventDetails }) {
     rows.push({ icon: Tag, label: "Category", value: event.type });
   }
  const router = useRouter()
+
+  useEffect(() => {
+    if (isPending || !joinKey || !user?.email) {
+      return;
+    }
+
+    const controller = new AbortController();
+    let isActive = true;
+
+    const checkJoined = async () => {
+      let joined = false;
+
+      try {
+        const token = await getTokenFromClient();
+
+        if (token) {
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/joined/${encodeURIComponent(user.email)}`,
+            {
+              signal: controller.signal,
+              headers: { authorization: `Bearer ${token}` },
+            },
+          );
+
+          if (res.ok) {
+            const data: unknown = await res.json();
+            joined = hasJoinedEvent(data, event.id);
+          }
+        }
+      } catch {
+        joined = false;
+      }
+
+      if (isActive) {
+        setJoinedByEvent((current) => ({ ...current, [joinKey]: joined }));
+      }
+    };
+
+    checkJoined();
+
+    return () => {
+      isActive = false;
+      controller.abort();
+    };
+  }, [event.id, isPending, joinKey, user?.email]);
+
+  const isJoined = joinKey ? joinedByEvent[joinKey] === true : false;
+  const isCheckingJoinStatus =
+    Boolean(joinKey) && !isPending && !(joinKey in joinedByEvent);
+  const isJoinButtonDisabled =
+    isPending || isJoining || isJoined || isCheckingJoinStatus;
+
   const handleJoin = async () => {
+    if (isJoined || isJoining || isCheckingJoinStatus) {
+      return;
+    }
+
     if (!user) {
       toast.error("Please sign in to join this event.");
       router.push("/sign-in");
@@ -49,20 +133,21 @@ export default function JoinCard({ event }: { event: EventDetails }) {
       return;
     }
 
-    if (isJoining) {
-      return;
-    }
-
-    const data = {
-      name: user.name,
-      email: user.email,
-      ...event,
-    };
-
-    const token = await getTokenFromClient()
-
     try {
       setIsJoining(true);
+
+      const token = await getTokenFromClient();
+
+      if (!token) {
+        toast.error("Please sign in again to join this event.");
+        return;
+      }
+
+      const data = {
+        name: user.name,
+        email: user.email,
+        ...event,
+      };
 
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/joined`, {
         method: "POST",
@@ -76,6 +161,7 @@ export default function JoinCard({ event }: { event: EventDetails }) {
         throw new Error(`Join request failed: ${res.status}`);
       }
 
+      setJoinedByEvent((current) => ({ ...current, [joinKey]: true }));
       toast.success("Joined successfully!");
     } catch (error) {
       console.error("Failed to join event:", error);
@@ -147,15 +233,25 @@ export default function JoinCard({ event }: { event: EventDetails }) {
         <Button
           type="button"
           onClick={handleJoin}
-          disabled={isJoining}
-          aria-busy={isJoining}
-          className="group/join mt-5 h-12 w-full rounded-xl bg-primary px-6 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#14532d] hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:translate-y-0 dark:bg-emerald-500 dark:text-emerald-950 dark:hover:bg-emerald-400"
+          disabled={isJoinButtonDisabled}
+          aria-busy={isJoining || isCheckingJoinStatus}
+          className="group/join mt-5 h-12 w-full rounded-xl bg-primary px-6 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#14532d] hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:translate-y-0 disabled:shadow-none dark:bg-emerald-500 dark:text-emerald-950 dark:hover:bg-emerald-400"
         >
-          {isJoining ? "Joining…" : "Join This Event"}
-          <ArrowRight
-            className="size-4 transition-transform duration-300 group-hover/join:translate-x-1"
-            aria-hidden
-          />
+          {isJoined
+            ? "Already Joined"
+            : isJoining
+              ? "Joining…"
+              : isCheckingJoinStatus
+                ? "Checking…"
+                : "Join This Event"}
+          {isJoined ? (
+            <CheckCircle2 className="size-4" aria-hidden />
+          ) : (
+            <ArrowRight
+              className="size-4 transition-transform duration-300 group-hover/join:translate-x-1"
+              aria-hidden
+            />
+          )}
         </Button>
 
         <p className="mt-4 flex items-start justify-center gap-1.5 text-center text-[0.7rem] leading-5 text-muted-foreground">

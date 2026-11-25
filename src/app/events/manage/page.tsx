@@ -16,7 +16,7 @@ const ManageEventPage = async () => {
     const email = session?.user?.email;
 
    const token = await getTokenFromServer()
-    console.log(token);
+  
 
     if (!email) return null;
 

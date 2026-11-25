@@ -27,6 +27,7 @@ import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { getTokenFromClient } from "@/lib/getTokenFromClient";
+import { toast } from "react-toastify";
 
 const manrope = Manrope({ subsets: ["latin"], display: "swap" });
 
@@ -173,7 +174,7 @@ const CreateEventPage = () => {
           ...eventData,
           email:user?.email
         }
-      const token = getTokenFromClient()
+      const token = await getTokenFromClient()
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/add-event`,{
         method: "POST",
         headers: {
@@ -186,9 +187,9 @@ const CreateEventPage = () => {
 
       console.log()
       if (!res.ok) {
-        throw new Error(result?.message || "Failed to add destination");
+        throw new Error(result?.message || "Failed to Create Event");
       }
-
+      toast.success('Event Created Successfully')
       router.push("/upcomingEvents");
       router.refresh();
         

@@ -96,8 +96,24 @@ const Hero = () => {
                             style={{ animationDelay: "80ms" }}
                         >
                             <span className="block text-foreground">Small Actions.</span>
-                            <span className="mt-1 block bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent dark:from-emerald-400 dark:via-emerald-400 dark:to-amber-300">
-                                Big Changes.
+                            <span className="mt-1 block">
+                                <span className="relative inline-block bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent dark:from-emerald-400 dark:via-emerald-400 dark:to-amber-300">
+                                    Big Changes.
+                                    <svg
+                                        aria-hidden
+                                        viewBox="0 0 220 12"
+                                        preserveAspectRatio="none"
+                                        className="absolute -bottom-1 left-0 h-2.5 w-full text-accent/70"
+                                    >
+                                        <path
+                                            d="M2 9C52 3 156 2 218 7"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="3"
+                                            strokeLinecap="round"
+                                        />
+                                    </svg>
+                                </span>
                             </span>
                         </h1>
 

@@ -28,6 +28,7 @@ import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { getTokenFromClient } from "@/lib/getTokenFromClient";
+import { toast } from "react-toastify";
 
 export interface EventItem {
     _id?: string;
@@ -91,6 +92,7 @@ const UpdateEventPage = ({ event }: UpdateEventPageProps) => {
         if (!res.ok) return;
         setOpen(false);
         router.refresh();
+        toast.success('Updated Successfully')
     }
 
 

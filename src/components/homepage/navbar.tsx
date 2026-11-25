@@ -9,6 +9,7 @@ import {
   CircleCheck,
   CirclePlus,
   LogOut,
+  Menu,
   Moon,
   Settings,
   Sun,
@@ -59,7 +60,7 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 w-full border-b border-border/70 bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
       <nav
         aria-label="Main"
-        className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 sm:px-6 lg:h-20 lg:px-8"
+        className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-3 gap-y-2 px-4 py-2 sm:px-6 md:h-20 md:flex-nowrap md:py-0 lg:px-8"
       >
         <Link href="/" className="flex shrink-0 items-center" aria-label="TogetherWe home">
           <Image
@@ -72,10 +73,10 @@ const Navbar = () => {
           />
         </Link>
 
-        <div className="flex min-w-0 flex-1 justify-center">
+        <div className="hidden min-w-0 justify-center md:flex md:flex-1">
           <Link
             href="/upcomingEvents"
-            className="group hidden items-center gap-2 rounded-full border border-border/80 bg-secondary/70 px-4 py-1.5 text-sm font-medium text-secondary-foreground transition-colors hover:bg-secondary md:flex"
+            className="group flex items-center gap-2 rounded-full border border-border/80 bg-secondary/70 px-4 py-1.5 text-sm font-medium text-secondary-foreground transition-colors hover:bg-secondary"
           >
             <span className="relative flex size-2">
               <span className="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-75" />
@@ -87,7 +88,7 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+        <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2 md:ml-0">
           <Button
             type="button"
             variant="ghost"
@@ -99,6 +100,31 @@ const Navbar = () => {
             <Sun className="size-5 dark:hidden" />
             <Moon className="hidden size-5 dark:block" />
           </Button>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              aria-label="Open navigation menu"
+              className="grid size-9 place-items-center rounded-full text-foreground outline-none transition-colors hover:bg-secondary/60 focus-visible:ring-4 focus-visible:ring-primary/15 data-[popup-open]:bg-secondary/60 md:hidden"
+            >
+              <Menu className="size-5" />
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent
+              align="end"
+              sideOffset={12}
+              className="w-60 max-w-[calc(100vw-2rem)] rounded-2xl border border-border/70 bg-popover p-2 shadow-xl shadow-black/10"
+            >
+              <DropdownMenuItem
+                render={<Link href="/upcomingEvents" />}
+                className="gap-3 rounded-xl px-2.5 py-2 text-sm font-semibold text-foreground/85 focus:bg-secondary/60 focus:text-foreground focus:[&_svg]:text-primary"
+              >
+                <span className="grid size-7 shrink-0 place-items-center rounded-full border border-primary/20 bg-secondary/30 text-primary">
+                  <CalendarDays className="size-4" />
+                </span>
+                Upcoming Events
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           {user ? (
             <>

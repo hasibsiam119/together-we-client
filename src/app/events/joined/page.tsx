@@ -14,6 +14,9 @@ import {
 } from "lucide-react";
 
 import { authClient } from "@/lib/auth-client";
+import { toast } from "react-toastify";
+
+
 
 const manrope = Manrope({ subsets: ["latin"] });
 
@@ -42,6 +45,7 @@ const formatEventDate = (date: string) => {
 };
 
 const JoinedEventPage = () => {
+  
     const { data: session, isPending } = authClient.useSession();
 
     const user = session?.user;
@@ -111,6 +115,24 @@ const JoinedEventPage = () => {
     if (!user?.email) {
         return null;
     }
+   
+    const handleCancel = async (joinedId:string) => {
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/joined/${joinedId}`, {
+                method: "DELETE",
+            });
+
+            if (!res.ok) {
+                throw new Error(`Cancellation failed: ${res.status}`);
+            }
+
+            toast.success("Booking cancelled successfully");
+            setJoinedEvents((prev) => prev.filter((e) => e._id !== joinedId));
+        } catch (error) {
+            console.error(error);
+            toast.error("Unable to cancel booking. Please try again.");
+        }
+    };
 
     return (
         <main className={`${ manrope.className } min - h - screen bg - [#F8FAF7] dark: bg - [#111C16] py - 12 px - 4`}>
@@ -246,6 +268,7 @@ const JoinedEventPage = () => {
                             <div className="flex w-full items-center gap-2 md:w-auto md:self-end">
 
                                 <button
+                                    onClick={() => handleCancel(event._id)}
                                     type="button"
                                     className="flex flex-1 md:flex-none items-center justify-center gap-1.5 rounded-lg border border-red-300 bg-white px-4 py-2 text-sm font-semibold text-red-600 transition-colors hover:border-red-400 hover:bg-red-50 dark:border-red-800 dark:bg-transparent dark:text-red-400 dark:hover:bg-red-950/30"
                                 >

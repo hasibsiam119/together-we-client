@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 import { formatEventDateMedium, type EventDetails } from "@/lib/events";
 import { useRouter } from "next/navigation";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 export default function JoinCard({ event }: { event: EventDetails }) {
   const { data: session } = authClient.useSession();
@@ -58,12 +59,16 @@ export default function JoinCard({ event }: { event: EventDetails }) {
       ...event,
     };
 
+    const token = await getTokenFromClient()
+
     try {
       setIsJoining(true);
 
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/joined`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json",
+          authorization: `Bearer ${token}`
+         },
         body: JSON.stringify(data),
       });
 

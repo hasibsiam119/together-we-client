@@ -27,6 +27,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 export interface EventItem {
     _id?: string;
@@ -74,13 +75,14 @@ const UpdateEventPage = ({ event }: UpdateEventPageProps) => {
         const formData = new FormData(e.currentTarget);
         const payload = Object.fromEntries(formData.entries());
 
-        
+        const token = await getTokenFromClient()
         const res = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/events/${event._id ?? event.id}`,
             {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
+                    authorization: `Bearer ${token}`
                 },
                 body: JSON.stringify(payload),
             }

@@ -13,6 +13,7 @@ import { formatEventDate, toDateOnly } from "@/lib/events";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import UpdateEventPage from "./editEvent";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 export type ManageEvent = {
     _id?: string;
@@ -42,9 +43,13 @@ const ManageEventCard = ({
     const route = useRouter()
 
     const handleCancel = async () => {
+        const token = await getTokenFromClient()
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${event._id ?? event.id}`, {
                 method: "DELETE",
+                headers: {
+                    authorization: `Bearer ${token}`
+                }
             });
 
             if (!res.ok) {

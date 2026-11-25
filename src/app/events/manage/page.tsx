@@ -6,6 +6,7 @@ import ManageEventCard, {
 } from "@/components/manageEventCard";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { getTokenFromServer } from "@/lib/getTokenFromServer";
 
 const ManageEventPage = async () => {
     const session = await auth.api.getSession({
@@ -14,11 +15,19 @@ const ManageEventPage = async () => {
 
     const email = session?.user?.email;
 
+   const token = await getTokenFromServer()
+    console.log(token);
+
     if (!email) return null;
 
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/events/user/${encodeURIComponent(email)}`,
-        { cache: "no-store" }
+        { 
+            headers:{
+                authorization:`Bearer ${token}`
+            }
+            
+         } 
     );
 
     if (!res.ok) {

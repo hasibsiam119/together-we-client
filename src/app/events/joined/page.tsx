@@ -15,6 +15,8 @@ import {
 
 import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
+
 
 
 
@@ -65,10 +67,16 @@ const JoinedEventPage = () => {
         const controller = new AbortController();
 
         const getJoinedEvents = async () => {
+           const token = await getTokenFromClient()
             try {
                 const res = await fetch(
                     `${ process.env.NEXT_PUBLIC_API_URL }/joined/${ encodeURIComponent(user.email) } `,
-                    { signal: controller.signal }
+                    { signal: controller.signal,
+                        headers:{
+                            authorization:`Bearer ${token}`
+                        }
+
+                     }
                 );
 
                 if (!res.ok) {
@@ -117,9 +125,13 @@ const JoinedEventPage = () => {
     }
    
     const handleCancel = async (joinedId:string) => {
+        const token = await getTokenFromClient()
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/joined/${joinedId}`, {
                 method: "DELETE",
+                headers: {
+                    authorization: `Bearer ${token}`
+                }
             });
 
             if (!res.ok) {

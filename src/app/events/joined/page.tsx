@@ -130,7 +130,7 @@ const JoinedEventPage = () => {
             setJoinedEvents((prev) => prev.filter((e) => e._id !== joinedId));
         } catch (error) {
             console.error(error);
-            toast.error("Unable to cancel booking. Please try again.");
+            toast.error("Unable to cancel. Please try again.");
         }
     };
 

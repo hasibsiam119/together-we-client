@@ -115,7 +115,7 @@ const Hero = () => {
                             style={{ animationDelay: "280ms" }}
                         >
                             <Link
-                                href="/events"
+                                href="/upcomingEvents"
                                 className={buttonVariants({
                                     size: "lg",
                                     className:

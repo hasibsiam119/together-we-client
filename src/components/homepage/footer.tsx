@@ -12,7 +12,7 @@ const linkGroups = [
     id: "footer-explore",
     links: [
       { label: "Home", href: "/" },
-      { label: "Upcoming Events", href: "/events" },
+      { label: "Upcoming Events", href: "/upcomingEvents" },
       { label: "About Us", href: "/about" },
       { label: "Community Gallery", href: "/gallery" },
     ],
@@ -22,8 +22,8 @@ const linkGroups = [
     id: "footer-involved",
     links: [
       { label: "Create an Event", href: "/events/create" },
-      { label: "Join an Event", href: "/events" },
-      { label: "Manage Events", href: "/dashboard/events" },
+      { label: "Join an Event", href: "/upcomingEvents" },
+      { label: "Manage Events", href: "/events/manage" },
       { label: "Volunteer Opportunities", href: "/volunteer" },
     ],
   },
@@ -31,11 +31,11 @@ const linkGroups = [
     heading: "Categories",
     id: "footer-categories",
     links: [
-      { label: "Donation", href: "/events?category=donation" },
-      { label: "Plantation", href: "/events?category=plantation" },
-      { label: "Cleanup", href: "/events?category=cleanup" },
-      { label: "Education", href: "/events?category=education" },
-      { label: "Community Support", href: "/events?category=community-support" },
+      { label: "Donation", href: "/upcomingEvents?category=donation" },
+      { label: "Plantation", href: "/upcomingEvents?category=plantation" },
+      { label: "Cleanup", href: "/upcomingEvents?category=cleanup" },
+      { label: "Education", href: "/upcomingEvents?category=education" },
+      { label: "Community Support", href: "/upcomingEvents?category=community-support" },
     ],
   },
 ];

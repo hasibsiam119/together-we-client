@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 import { formatEventDateMedium, type EventDetails } from "@/lib/events";
+import { useRouter } from "next/navigation";
 
 export default function JoinCard({ event }: { event: EventDetails }) {
   const { data: session } = authClient.useSession();
@@ -38,10 +39,12 @@ export default function JoinCard({ event }: { event: EventDetails }) {
   if (event.type) {
     rows.push({ icon: Tag, label: "Category", value: event.type });
   }
-
+ const router = useRouter()
   const handleJoin = async () => {
     if (!user) {
       toast.error("Please sign in to join this event.");
+      router.push("/sign-in");
+
       return;
     }
 

@@ -229,7 +229,7 @@ const CreateEventPage = () => {
 
       <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
         <Link
-          href="/events"
+          href="/upcomingEvents"
           className="group inline-flex items-center gap-2.5 rounded-full text-sm font-semibold text-muted-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary dark:hover:text-emerald-400"
         >
           <span className="grid size-8 place-items-center rounded-full border border-border bg-card shadow-sm transition-all duration-200 group-hover:-translate-x-0.5 group-hover:border-primary/25 group-hover:text-primary dark:group-hover:text-emerald-400">

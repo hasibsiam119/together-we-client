@@ -112,8 +112,8 @@ const JoinedEventPage = () => {
 
     if (isPending || loading) {
         return (
-            <div className={`${ manrope.className } min - h - screen flex items - center justify - center bg - [#F8FAF7] dark: bg - [#111C16]`}>
-                <p className="text-green-700 dark:text-green-400 font-semibold">
+            <div className={`${manrope.className} flex min-h-screen items-center justify-center bg-[#F8FAF7] px-4 dark:bg-[#111C16]`}>
+                <p className="text-center text-sm font-semibold text-green-700 sm:text-base dark:text-green-400">
                     Loading joined events...
                 </p>
             </div>
@@ -147,40 +147,40 @@ const JoinedEventPage = () => {
     };
 
     return (
-        <main className={`${ manrope.className } min - h - screen bg - [#F8FAF7] dark: bg - [#111C16] py - 12 px - 4`}>
+        <main className={`${manrope.className} min-h-screen bg-[#F8FAF7] px-4 py-10 sm:px-6 sm:py-12 lg:px-8 dark:bg-[#111C16]`}>
 
-            <div className="max-w-6xl mx-auto py-10">
+            <div className="mx-auto w-full max-w-6xl">
 
                 {/* Page Header */}
-                <div className="mb-10">
+                <div className="mb-8 sm:mb-10">
 
-                    <p className="text-sm font-bold tracking-wider text-green-700 dark:text-green-400 mb-3">
+                    <p className="mb-2 text-xs font-bold tracking-wider text-green-700 sm:mb-3 sm:text-sm dark:text-green-400">
                         YOUR ACTIVITIES
                     </p>
 
-                    <h1 className="text-3xl md:text-4xl font-extrabold text-[#172B22] dark:text-white mb-3">
+                    <h1 className="mb-2 text-2xl font-extrabold text-[#172B22] sm:mb-3 sm:text-3xl lg:text-4xl dark:text-white">
                         Joined Events
                     </h1>
 
-                    <p className="text-gray-600 dark:text-gray-400">
+                    <p className="max-w-2xl text-sm leading-6 text-gray-600 sm:text-base dark:text-gray-400">
                         Manage and keep track of the events you have joined.
                     </p>
 
                 </div>
 
                 {/* Event Count */}
-                <div className="flex items-center gap-3 mb-7">
+                <div className="mb-6 flex items-center gap-3 sm:mb-7">
 
-                    <div className="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-900/40 flex items-center justify-center">
-                        <CalendarDays className="text-green-700 dark:text-green-400" />
+                    <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-green-100 sm:size-12 dark:bg-green-900/40">
+                        <CalendarDays className="size-5 text-green-700 sm:size-6 dark:text-green-400" />
                     </div>
 
-                    <div>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <div className="min-w-0">
+                        <p className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
                             Total Joined Events
                         </p>
 
-                        <p className="text-xl font-bold text-[#172B22] dark:text-white">
+                        <p className="text-lg font-bold text-[#172B22] sm:text-xl dark:text-white">
                             {joinedEvents.length} Events
                         </p>
                     </div>
@@ -189,30 +189,30 @@ const JoinedEventPage = () => {
 
                 {/* Error */}
                 {error && (
-                    <div className="mb-6 rounded-xl bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900 p-4 text-red-600">
+                    <div className="mb-6 rounded-xl border border-red-200 bg-red-50 p-3.5 text-sm text-red-600 sm:p-4 sm:text-base dark:border-red-900 dark:bg-red-950/30">
                         {error}
                     </div>
                 )}
 
                 {/* Empty State */}
                 {!error && joinedEvents.length === 0 && (
-                    <div className="bg-white dark:bg-[#1B2A21] border border-gray-200 dark:border-gray-700 rounded-2xl p-10 text-center">
+                    <div className="rounded-2xl border border-gray-200 bg-white p-6 text-center sm:p-10 dark:border-gray-700 dark:bg-[#1B2A21]">
 
-                        <div className="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900/40 flex items-center justify-center mx-auto mb-5">
-                            <CalendarX2 className="text-green-700 dark:text-green-400" size={30} />
+                        <div className="mx-auto mb-5 flex size-14 items-center justify-center rounded-full bg-green-100 sm:size-16 dark:bg-green-900/40">
+                            <CalendarX2 className="size-7 text-green-700 sm:size-8 dark:text-green-400" />
                         </div>
 
-                        <h2 className="text-xl font-bold text-[#172B22] dark:text-white mb-2">
+                        <h2 className="mb-2 text-lg font-bold text-[#172B22] sm:text-xl dark:text-white">
                             No Events Joined Yet
                         </h2>
 
-                        <p className="text-gray-500 dark:text-gray-400 mb-6">
+                        <p className="mx-auto mb-6 max-w-md text-sm leading-6 text-gray-500 sm:text-base dark:text-gray-400">
                             You haven&apos;t joined any events yet. Explore upcoming events and become part of your community.
                         </p>
 
                         <Link
                             href="/upcomingEvents"
-                            className="inline-flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-xl font-bold transition"
+                            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-green-700 px-6 py-3 font-bold text-white transition hover:bg-green-800 sm:w-auto"
                         >
                             Explore Events
                             <ArrowRight size={17} />
@@ -222,24 +222,24 @@ const JoinedEventPage = () => {
                 )}
 
                 {/* Joined Events */}
-                <div className="space-y-5">
+                <div className="space-y-4 sm:space-y-5">
 
                     {joinedEvents.map((event) => (
 
                         <div
                             key={event._id}
-                            className="flex flex-col gap-5 rounded-2xl border border-gray-200 bg-white p-4 transition-shadow duration-300 hover:shadow-lg md:flex-row md:gap-6 md:p-5 dark:border-gray-700 dark:bg-[#1B2A21]"
+                            className="flex flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-4 transition-shadow duration-300 hover:shadow-lg sm:gap-5 sm:p-5 md:flex-row md:gap-6 dark:border-gray-700 dark:bg-[#1B2A21]"
                         >
 
                             {/* Event Image */}
-                            <div className="h-48 w-full shrink-0 overflow-hidden rounded-xl bg-gray-100 md:h-36 md:w-56 lg:h-40 lg:w-64 dark:bg-gray-800">
+                            <div className="h-44 w-full shrink-0 overflow-hidden rounded-xl bg-gray-100 sm:h-52 md:h-36 md:w-48 lg:h-40 lg:w-64 dark:bg-gray-800">
 
                                 {/* Event thumbnails are remote URLs, so a plain img keeps host configuration simple. */}
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img
                                     src={event.thumbnail}
                                     alt={event.title}
-                                    className="w-full h-full object-cover"
+                                    className="h-full w-full object-cover"
                                 />
 
                             </div>
@@ -252,37 +252,37 @@ const JoinedEventPage = () => {
                                     Joined
                                 </span>
 
-                                <h2 className="mt-3 text-xl md:text-2xl font-bold leading-snug text-[#172B22] dark:text-white">
+                                <h2 className="mt-3 text-lg font-bold leading-snug text-[#172B22] sm:text-xl md:text-2xl dark:text-white">
                                     {event.title}
                                 </h2>
 
-                                <div className="mt-4 space-y-2 text-sm text-gray-500 dark:text-gray-400">
+                                <div className="mt-3 space-y-2 text-sm text-gray-500 sm:mt-4 dark:text-gray-400">
 
                                     <div className="flex items-center gap-2">
                                         <CalendarDays size={15} className="shrink-0 text-gray-400 dark:text-gray-500" />
-                                        <span>Date: {formatEventDate(event.date)}</span>
+                                        <span className="min-w-0">Date: {formatEventDate(event.date)}</span>
                                     </div>
 
                                     <div className="flex items-center gap-2">
                                         <MapPin size={15} className="shrink-0 text-gray-400 dark:text-gray-500" />
-                                        <span className="line-clamp-1">{event.location}</span>
+                                        <span className="min-w-0 line-clamp-1">{event.location}</span>
                                     </div>
 
                                 </div>
 
-                                <p className="mt-3 text-sm leading-6 text-gray-600 dark:text-gray-400 line-clamp-2">
+                                <p className="mt-3 text-sm leading-6 text-gray-600 line-clamp-2 dark:text-gray-400">
                                     {event.description}
                                 </p>
 
                             </div>
 
                             {/* Actions */}
-                            <div className="flex w-full items-center gap-2 md:w-auto md:self-end">
+                            <div className="mt-1 grid grid-cols-2 gap-2 md:mt-0 md:flex md:w-auto md:self-end">
 
                                 <button
                                     onClick={() => handleCancel(event._id)}
                                     type="button"
-                                    className="flex flex-1 md:flex-none items-center justify-center gap-1.5 rounded-lg border border-red-300 bg-white px-4 py-2 text-sm font-semibold text-red-600 transition-colors hover:border-red-400 hover:bg-red-50 dark:border-red-800 dark:bg-transparent dark:text-red-400 dark:hover:bg-red-950/30"
+                                    className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-red-300 bg-white px-4 py-2 text-sm font-semibold text-red-600 transition-colors hover:border-red-400 hover:bg-red-50 md:w-auto dark:border-red-800 dark:bg-transparent dark:text-red-400 dark:hover:bg-red-950/30"
                                 >
                                     <X size={15} />
                                     Cancel
@@ -290,7 +290,7 @@ const JoinedEventPage = () => {
 
                                 <Link
                                     href={`/upcomingEvents/${event.id}`}
-                                    className="flex flex-1 md:flex-none items-center justify-center gap-1.5 rounded-lg bg-green-700 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-green-800"
+                                    className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-green-700 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-green-800 md:w-auto"
                                 >
                                     <Eye size={15} />
                                     View

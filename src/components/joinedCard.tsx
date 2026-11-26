@@ -174,7 +174,7 @@ export default function JoinCard({ event }: { event: EventDetails }) {
   return (
     <section
       aria-labelledby="join-event-heading"
-      className="relative overflow-hidden rounded-[26px] border border-primary/10 bg-card shadow-xl shadow-primary/[0.07]"
+      className="relative overflow-hidden rounded-2xl border border-primary/10 bg-card shadow-xl shadow-primary/[0.07] sm:rounded-[26px]"
     >
       <div
         aria-hidden
@@ -185,7 +185,7 @@ export default function JoinCard({ event }: { event: EventDetails }) {
         className="pointer-events-none absolute -right-10 -top-10 size-32 rounded-full border border-primary/10 dark:border-emerald-400/10"
       />
 
-      <div className="relative p-5 sm:p-6">
+      <div className="relative p-4 sm:p-5 lg:p-6">
         <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/25 bg-amber-500/10 px-3 py-1 text-[0.6rem] font-bold uppercase tracking-[0.14em] text-amber-700 dark:border-amber-400/25 dark:bg-amber-400/10 dark:text-amber-300">
           <HeartHandshake className="size-3.5" aria-hidden />
           Make an impact
@@ -193,7 +193,7 @@ export default function JoinCard({ event }: { event: EventDetails }) {
 
         <h2
           id="join-event-heading"
-          className="mt-4 text-2xl font-extrabold tracking-[-0.03em] text-foreground"
+          className="mt-4 text-xl font-extrabold tracking-[-0.03em] text-foreground sm:text-2xl"
         >
           Be Part of the Change
         </h2>

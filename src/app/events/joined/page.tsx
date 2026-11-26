@@ -70,7 +70,7 @@ const JoinedEventPage = () => {
            const token = await getTokenFromClient()
             try {
                 const res = await fetch(
-                    `${ process.env.NEXT_PUBLIC_API_URL }/joined/${ encodeURIComponent(user.email) } `,
+                    `${process.env.NEXT_PUBLIC_API_URL}/joined/${encodeURIComponent(user.email)}`,
                     { signal: controller.signal,
                         headers:{
                             authorization:`Bearer ${token}`

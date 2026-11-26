@@ -175,6 +175,12 @@ const CreateEventPage = () => {
           email:user?.email
         }
       const token = await getTokenFromClient()
+
+      if (!token) {
+        toast.error("Please sign in again to create an event.")
+        return
+      }
+
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/add-event`,{
         method: "POST",
         headers: {
